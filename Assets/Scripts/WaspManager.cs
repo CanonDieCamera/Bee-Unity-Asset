@@ -24,7 +24,9 @@ public class WaspManager : MonoBehaviour
     [Header("Enemy AI Settings")]
     private bool simpleAI = true;
     //Stabilization
-    private float damping = 0.5f;
+    private float damping = 2;
+    private bool currentlyStabalizing = false;
+
 
     // Start is called before the first frame update
     void Start()
@@ -40,7 +42,7 @@ public class WaspManager : MonoBehaviour
             transform.Translate(direction * movingSpeed * Time.deltaTime);
 
             //Stabilizing the bee so that it always brings itself into a horizontal position
-            Stabilizer();
+            Stabilizing();
         }
         
     }
@@ -64,15 +66,32 @@ public class WaspManager : MonoBehaviour
         }
     }
 
-    private void Stabilizer()
+    private void Stabilizing()
     {
-        if(faceRight)
+        if(currentlyStabalizing)
         {
-            transform.localEulerAngles = Vector2.Lerp(transform.localEulerAngles, new Vector2(0, 180), damping * Time.deltaTime);
+            if(faceRight)
+            {
+                transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(0, 180, 0), damping * Time.deltaTime);
+                
+                if(transform.localEulerAngles == new Vector3(0, 180, 0))
+                {
+                    currentlyStabalizing = false;
+                }
+            }
+            else
+            {
+                transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(0, 0, 0), damping * Time.deltaTime);
+                
+                if(transform.localEulerAngles == new Vector3(0, 0, 0))
+                {
+                    currentlyStabalizing = false;
+                }
+            }
         }
-        else
-        {
-            transform.localEulerAngles = Vector2.Lerp(transform.localEulerAngles, new Vector2(0, 0), damping * Time.deltaTime);
-        }
+    }
+
+    private void OnCollisionExit2D(Collision2D other) {
+        currentlyStabalizing = true;
     }
 }

@@ -115,9 +115,6 @@ public class BeeManager : MonoBehaviour
     }
 
     private void OnCollisionExit2D(Collision2D other) {
-        if(other.collider.tag == "Terrain")
-        {
-            currentlyStabalizing = true;
-        }
+        currentlyStabalizing = true;
     }
 }
