@@ -1,19 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
+
+/*
+This is the manager of the player controllable bee. It does:
+    - controll the bee (Movement, Animation)
+*/
 
 public class BeeManager : MonoBehaviour
 {
-    /*
-    This is the manager of the player controllable bee. It does:
-        - controll the bee.
-    */
-
     //Movement
     [SerializeField]    //Shows a private variable defined directly under this line in the Inspector
     private float movingSpeed = 5f; // Moving Speed of the Bee, can be changed in the Inspector
     private Vector2 direction; //Direction of the player controlled movement
     private bool faceRight = false; //Saves if Bee faces right
+
+    //Stabilization
+    private float damping = 2;
+    private bool currentlyStabalizing = false;
 
     //Animation
     private Animator moveAnimation;
@@ -78,6 +83,41 @@ public class BeeManager : MonoBehaviour
 
             //Animation
             moveAnimation.SetBool("Forward", true);
+        }
+
+        //Stabilizing the bee so that it always brings itself into a horizontal position
+        Stabilizing();
+    }
+
+    private void Stabilizing()
+    {
+        if(currentlyStabalizing)
+        {
+            if(faceRight)
+            {
+                transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(0, 180, 0), damping * Time.deltaTime);
+                
+                if(transform.localEulerAngles == new Vector3(0, 180, 0))
+                {
+                    currentlyStabalizing = false;
+                }
+            }
+            else
+            {
+                transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(0, 0, 0), damping * Time.deltaTime);
+                
+                if(transform.localEulerAngles == new Vector3(0, 0, 0))
+                {
+                    currentlyStabalizing = false;
+                }
+            }
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D other) {
+        if(other.collider.tag == "Terrain")
+        {
+            currentlyStabalizing = true;
         }
     }
 }
