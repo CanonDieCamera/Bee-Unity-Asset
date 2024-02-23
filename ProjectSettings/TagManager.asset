@@ -7,6 +7,9 @@ TagManager:
   - Terrain
   - Bee
   - Wasp
+  - Flower
+  - Bee Nest
+  - Pollen Counter
   layers:
   - Default
   - TransparentFX

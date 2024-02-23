@@ -7,7 +7,10 @@ using UnityEngine.Scripting.APIUpdating;
 
 /*
 This is the Manager of the Wasp Enemy. It does:
-    - 
+    - Wasp Moving
+        - simple AI: Wasp moves horizontal. If it collides with Terrain it changes direction.
+        - other AI: Wasp follows a path of GameObjects
+    - Stabilizing the Wasp's rotation if it changes uncontrolled
 */
 
 public class WaspManager : MonoBehaviour
@@ -18,20 +21,24 @@ public class WaspManager : MonoBehaviour
     private bool faceRight = false;     //Saves if Wasp faces right
     private Vector2 direction = new Vector2(-1, 0);  //Moving direction of the Wasp
 
-    [SerializeField]
-    private float maxMovingDistance = 10;
-
     [Header("Enemy AI Settings")]
-    private bool simpleAI = true;
-    //Stabilization
-    private float damping = 2;
-    private bool currentlyStabalizing = false;
+    [SerializeField]
+    private List<GameObject> points = new List<GameObject>(); //List of Points the Wasp should follow
+    private int pointsIndex = 0;    //Index to loop over points List
+    private bool simpleAI = false;  //Bool to determine AI System
 
 
     // Start is called before the first frame update
     void Start()
     {
+        //If no points are defined Wasp uses simpleAI System
+        if(points.Count == 0)
+        {
+            simpleAI = true;
+        }
 
+        //Freeze Rotation so it gets not affected by Physics simulation
+        gameObject.GetComponent<Rigidbody2D>().freezeRotation = true;
     }
 
     // Update is called once per frame
@@ -40,14 +47,15 @@ public class WaspManager : MonoBehaviour
         if (simpleAI)
         {
             transform.Translate(direction * movingSpeed * Time.deltaTime);
-
-            //Stabilizing the bee so that it always brings itself into a horizontal position
-            Stabilizing();
         }
-        
+        else
+        {
+            FollowPath();
+        }
     }
 
-    private void OnCollisionEnter2D(Collision2D other) {    //If Wasp collides with something with a Collider2D
+    //Is called once, if Wasp collides with something with a Collider2D
+    private void OnCollisionEnter2D(Collision2D other) { 
         if(other.collider.tag == "Terrain")
         {
             if(simpleAI)
@@ -66,32 +74,21 @@ public class WaspManager : MonoBehaviour
         }
     }
 
-    private void Stabilizing()
+    //Follows a path from the points List
+    private void FollowPath()
     {
-        if(currentlyStabalizing)
+        transform.position = Vector2.MoveTowards(transform.position, points[pointsIndex].transform.position, movingSpeed * Time.deltaTime);
+
+        if(transform.position == points[pointsIndex].transform.position)
         {
-            if(faceRight)
+            if(pointsIndex < points.Count - 1)
             {
-                transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(0, 180, 0), damping * Time.deltaTime);
-                
-                if(transform.localEulerAngles == new Vector3(0, 180, 0))
-                {
-                    currentlyStabalizing = false;
-                }
+                pointsIndex++;
             }
             else
             {
-                transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(0, 0, 0), damping * Time.deltaTime);
-                
-                if(transform.localEulerAngles == new Vector3(0, 0, 0))
-                {
-                    currentlyStabalizing = false;
-                }
+                pointsIndex = 0;
             }
         }
-    }
-
-    private void OnCollisionExit2D(Collision2D other) {
-        currentlyStabalizing = true;
     }
 }

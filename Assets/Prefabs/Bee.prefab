@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2148216812280954443}
   m_Layer: 0
   m_Name: Bee
-  m_TagString: Bee
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -47,6 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movingSpeed: 10
+  hasPollen: 0
 --- !u!50 &2148216812280954443
 Rigidbody2D:
   serializedVersion: 4
@@ -88,7 +89,7 @@ GameObject:
   - component: {fileID: 2655081123434654213}
   m_Layer: 0
   m_Name: Sprites
-  m_TagString: Untagged
+  m_TagString: Bee
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

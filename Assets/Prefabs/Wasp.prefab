@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 9023921856274487453}
   m_Layer: 0
   m_Name: Wasp
-  m_TagString: Wasp
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -47,7 +47,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movingSpeed: 5
-  maxMovingDistance: 10
+  points:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!50 &9023921856274487453
 Rigidbody2D:
   serializedVersion: 4
@@ -88,7 +92,7 @@ GameObject:
   - component: {fileID: 6595069461729226834}
   m_Layer: 0
   m_Name: Sprite
-  m_TagString: Untagged
+  m_TagString: Wasp
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

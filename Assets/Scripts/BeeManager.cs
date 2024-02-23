@@ -6,6 +6,7 @@ using UnityEngine;
 /*
 This is the manager of the player controllable bee. It does:
     - controll the bee (Movement, Animation)
+    - stabilizing the Bee's rotation if it changes uncontrolled
 */
 
 public class BeeManager : MonoBehaviour
@@ -16,16 +17,19 @@ public class BeeManager : MonoBehaviour
     private Vector2 direction; //Direction of the player controlled movement
     private bool faceRight = false; //Saves if Bee faces right
 
-    //Stabilization
-    private float damping = 2;
-    private bool currentlyStabalizing = false;
-
     //Animation
     private Animator moveAnimation;
+
+    //Status
+    private bool isDead = false;
+    public bool hasPollen = false;
 
     // Start is called before the first frame update
     private void Start() {
         moveAnimation = transform.GetChild(0).GetComponent<Animator>();
+
+        //Freeze Rotation so it gets not affected by Physics simulation
+        gameObject.GetComponent<Rigidbody2D>().freezeRotation = true;
     }
 
     // Update is called once per frame
@@ -36,7 +40,7 @@ public class BeeManager : MonoBehaviour
         moveAnimation.SetBool("Down", false);
 
         //Controll the Bee with 'w', 'a', 's', 'd'
-        if(Input.GetKey(KeyCode.W))   //KeyCodes at: https://docs.unity3d.com/ScriptReference/KeyCode.html
+        if(Input.GetKey(KeyCode.W) && !isDead)   //KeyCodes at: https://docs.unity3d.com/ScriptReference/KeyCode.html
         {
             direction = new Vector2(0, 1);
             transform.Translate(direction * movingSpeed * Time.deltaTime);
@@ -45,7 +49,7 @@ public class BeeManager : MonoBehaviour
             moveAnimation.SetBool("Up", true);
         }
 
-        if(Input.GetKey(KeyCode.A))
+        if(Input.GetKey(KeyCode.A) && !isDead)
         {
             direction = new Vector2(-1, 0);
             transform.Translate(direction * movingSpeed * Time.deltaTime);
@@ -60,7 +64,7 @@ public class BeeManager : MonoBehaviour
             moveAnimation.SetBool("Forward", true);
         }
 
-        if(Input.GetKey(KeyCode.S))
+        if(Input.GetKey(KeyCode.S) && !isDead)
         {
             direction = new Vector2(0, -1);
             transform.Translate(direction * movingSpeed * Time.deltaTime);
@@ -69,7 +73,7 @@ public class BeeManager : MonoBehaviour
             moveAnimation.SetBool("Down", true);
         }
 
-        if(Input.GetKey(KeyCode.D))
+        if(Input.GetKey(KeyCode.D) && !isDead)
         {
             direction = new Vector2(-1, 0);
             transform.Translate(direction * movingSpeed * Time.deltaTime);
@@ -84,37 +88,50 @@ public class BeeManager : MonoBehaviour
             //Animation
             moveAnimation.SetBool("Forward", true);
         }
-
-        //Stabilizing the bee so that it always brings itself into a horizontal position
-        Stabilizing();
     }
 
-    private void Stabilizing()
+    private void OnCollisionEnter2D(Collision2D other)
     {
-        if(currentlyStabalizing)
+        if(other.collider.tag == "Wasp")
         {
-            if(faceRight)
-            {
-                transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(0, 180, 0), damping * Time.deltaTime);
-                
-                if(transform.localEulerAngles == new Vector3(0, 180, 0))
-                {
-                    currentlyStabalizing = false;
-                }
-            }
-            else
-            {
-                transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(0, 0, 0), damping * Time.deltaTime);
-                
-                if(transform.localEulerAngles == new Vector3(0, 0, 0))
-                {
-                    currentlyStabalizing = false;
-                }
-            }
+            //Disable Player Controll
+            isDead = true;
+
+            //Exit animations
+
+            //Change Sprite
+
+            //Enable Gravitiy, so bee falls down
+            gameObject.GetComponent<Rigidbody2D>().gravityScale = 1;
+
+            //GameOver Screen
+
         }
     }
 
-    private void OnCollisionExit2D(Collision2D other) {
-        currentlyStabalizing = true;
+    private void OnTriggerEnter2D(Collider2D other) {
+        if(other.tag == "Flower")
+        {
+            if(other.transform.parent.GetComponent<FlowerManager>().hasPollen)
+            {
+                //Change Sprite of bee
+
+                //Bee now has Pollen
+                hasPollen = true;
+
+                //Flower no longer has Pollen
+                other.transform.parent.GetComponent<FlowerManager>().hasPollen = false;
+            }
+        }
+
+        if(other.tag == "Bee Nest")
+        {
+            //Add 1 to pollenCounter variable in BeeNestManager
+            if(hasPollen)
+            {
+            other.transform.parent.GetComponent<BeeNestManager>().pollenAmount += 1;
+            hasPollen = false;
+            }
+        }
     }
 }
