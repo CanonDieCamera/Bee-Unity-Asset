@@ -429,6 +429,27 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Pixelbiene Spritesheet_14
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 0
+        width: 320
+        height: 368
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8269e9026455baa45ac26a2976b6a0d3
+      internalID: 1384687312
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -446,6 +467,7 @@ TextureImporter:
       Pixelbiene Spritesheet_11: 186369503
       Pixelbiene Spritesheet_12: -1891673082
       Pixelbiene Spritesheet_13: -1309814858
+      Pixelbiene Spritesheet_14: 1384687312
       Pixelbiene Spritesheet_2: -639750150
       Pixelbiene Spritesheet_3: -318588928
       Pixelbiene Spritesheet_4: -470383040

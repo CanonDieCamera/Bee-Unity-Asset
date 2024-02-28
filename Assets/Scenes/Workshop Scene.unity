@@ -486,21 +486,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3220733089073327570, guid: df6badeaa44b4ba4caab44567c6c6966, type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3468611946876883649, guid: df6badeaa44b4ba4caab44567c6c6966, type: 3}
       propertyPath: m_Name
       value: Flower
       objectReference: {fileID: 0}
     - target: {fileID: 4719425584232940321, guid: df6badeaa44b4ba4caab44567c6c6966, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.71
+      value: -2.98
       objectReference: {fileID: 0}
     - target: {fileID: 4719425584232940321, guid: df6badeaa44b4ba4caab44567c6c6966, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 6.51
+      value: 6.93
       objectReference: {fileID: 0}
     - target: {fileID: 4719425584232940321, guid: df6badeaa44b4ba4caab44567c6c6966, type: 3}
       propertyPath: m_LocalPosition.z
@@ -588,11 +584,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3436850019885408069, guid: 8877f089c2c1b4241b36123bd2069e25, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 45.18
       objectReference: {fileID: 0}
     - target: {fileID: 3436850019885408069, guid: 8877f089c2c1b4241b36123bd2069e25, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 19.16
+      value: 10.87
       objectReference: {fileID: 0}
     - target: {fileID: 3436850019885408069, guid: 8877f089c2c1b4241b36123bd2069e25, type: 3}
       propertyPath: m_LocalPosition.z
@@ -729,7 +725,7 @@ Transform:
   m_GameObject: {fileID: 1195429422}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 14.15, y: 6.58, z: 0}
+  m_LocalPosition: {x: 14.15, y: 9.73, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -63278,11 +63274,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2272743622322965779, guid: 122ccd5fe6535cf4d8261fab5a6ad923, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 62.1
+      value: 119.1
       objectReference: {fileID: 0}
     - target: {fileID: 2272743622322965779, guid: 122ccd5fe6535cf4d8261fab5a6ad923, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.62
+      value: -1.1
       objectReference: {fileID: 0}
     - target: {fileID: 2272743622322965779, guid: 122ccd5fe6535cf4d8261fab5a6ad923, type: 3}
       propertyPath: m_LocalPosition.z
@@ -63319,14 +63315,6 @@ PrefabInstance:
     - target: {fileID: 2848332749343147550, guid: 122ccd5fe6535cf4d8261fab5a6ad923, type: 3}
       propertyPath: m_Name
       value: Bee Nest
-      objectReference: {fileID: 0}
-    - target: {fileID: 6900679814408582742, guid: 122ccd5fe6535cf4d8261fab5a6ad923, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -64.61
-      objectReference: {fileID: 0}
-    - target: {fileID: 6900679814408582742, guid: 122ccd5fe6535cf4d8261fab5a6ad923, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 8.75
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
