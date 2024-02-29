@@ -15,10 +15,16 @@ public class FlowerManager : MonoBehaviour
 
             if(!_hasPollen && !currentlyRecovering)
             {
-                //Change Sprite
+                //Change Animation
+                transform.GetChild(0).GetComponent<Animator>().SetBool("pollen", false);
 
                 //Recover Pollen
                 StartCoroutine(RecoveryPollen());
+            }
+            else
+            {
+                //Change Animation
+                transform.GetChild(0).GetComponent<Animator>().SetBool("pollen", true);
             }
         }
     }  

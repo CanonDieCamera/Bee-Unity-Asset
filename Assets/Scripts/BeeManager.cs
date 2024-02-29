@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using TMPro;
 using UnityEngine;
 
 /*
@@ -16,20 +17,35 @@ public class BeeManager : MonoBehaviour
     private float movingSpeed = 5f; // Moving Speed of the Bee, can be changed in the Inspector
     private Vector2 direction; //Direction of the player controlled movement
     private bool faceRight = false; //Saves if Bee faces right
+    private Rigidbody2D mRigidbody2D;
 
     //Animation
     private Animator moveAnimation;
+    [SerializeField]
+    private Sprite deadSprite;
 
     //Status
     private bool isDead = false;
-    public bool hasPollen = false;
+    private bool hasPollen = false;
+    private GameObject pollen;
+
+    //GameOver
+    [SerializeField]
+    private GameObject gameOver;
 
     // Start is called before the first frame update
     private void Start() {
+        //Animations for Bee movement
         moveAnimation = transform.GetChild(0).GetComponent<Animator>();
+
+        //Get rigidbody2D
+        mRigidbody2D = gameObject.GetComponent<Rigidbody2D>();
 
         //Freeze Rotation so it gets not affected by Physics simulation
         gameObject.GetComponent<Rigidbody2D>().freezeRotation = true;
+
+        //Get GameObject Pollen
+        pollen = transform.GetChild(0).GetChild(0).gameObject;
     }
 
     // Update is called once per frame
@@ -39,6 +55,15 @@ public class BeeManager : MonoBehaviour
         moveAnimation.SetBool("Up", false);
         moveAnimation.SetBool("Down", false);
 
+        //for pollen idle
+        if(hasPollen && !pollen.transform.GetChild(0).gameObject.activeSelf)
+        {
+            pollen.transform.GetChild(0).gameObject.SetActive(true);
+            pollen.transform.GetChild(1).gameObject.SetActive(false);
+            pollen.transform.GetChild(2).gameObject.SetActive(false);
+            pollen.transform.GetChild(3).gameObject.SetActive(false);
+        }
+
         //Controll the Bee with 'w', 'a', 's', 'd'
         if(Input.GetKey(KeyCode.W) && !isDead)   //KeyCodes at: https://docs.unity3d.com/ScriptReference/KeyCode.html
         {
@@ -47,6 +72,15 @@ public class BeeManager : MonoBehaviour
 
             //Animation
             moveAnimation.SetBool("Up", true);
+
+            //Pollen
+            if(hasPollen && !pollen.transform.GetChild(1).gameObject.activeSelf)
+            {
+                pollen.transform.GetChild(0).gameObject.SetActive(false);
+                pollen.transform.GetChild(1).gameObject.SetActive(true);
+                pollen.transform.GetChild(2).gameObject.SetActive(false);
+                pollen.transform.GetChild(3).gameObject.SetActive(false);
+            }
         }
 
         if(Input.GetKey(KeyCode.A) && !isDead)
@@ -62,6 +96,15 @@ public class BeeManager : MonoBehaviour
 
             //Animation
             moveAnimation.SetBool("Forward", true);
+
+            //Pollen
+            if(hasPollen && !pollen.transform.GetChild(3).gameObject.activeSelf)
+            {
+                pollen.transform.GetChild(0).gameObject.SetActive(false);
+                pollen.transform.GetChild(1).gameObject.SetActive(false);
+                pollen.transform.GetChild(2).gameObject.SetActive(false);
+                pollen.transform.GetChild(3).gameObject.SetActive(true);
+            }
         }
 
         if(Input.GetKey(KeyCode.S) && !isDead)
@@ -71,6 +114,15 @@ public class BeeManager : MonoBehaviour
 
             //Animation
             moveAnimation.SetBool("Down", true);
+
+            //Pollen
+            if(hasPollen && !pollen.transform.GetChild(2).gameObject.activeSelf)
+            {
+                pollen.transform.GetChild(0).gameObject.SetActive(false);
+                pollen.transform.GetChild(1).gameObject.SetActive(false);
+                pollen.transform.GetChild(2).gameObject.SetActive(true);
+                pollen.transform.GetChild(3).gameObject.SetActive(false);
+            }
         }
 
         if(Input.GetKey(KeyCode.D) && !isDead)
@@ -87,6 +139,15 @@ public class BeeManager : MonoBehaviour
 
             //Animation
             moveAnimation.SetBool("Forward", true);
+
+            //Pollen
+            if(hasPollen && !pollen.transform.GetChild(3).gameObject.activeSelf)
+            {
+                pollen.transform.GetChild(0).gameObject.SetActive(false);
+                pollen.transform.GetChild(1).gameObject.SetActive(false);
+                pollen.transform.GetChild(2).gameObject.SetActive(false);
+                pollen.transform.GetChild(3).gameObject.SetActive(true);
+            }
         }
     }
 
@@ -98,23 +159,30 @@ public class BeeManager : MonoBehaviour
             isDead = true;
 
             //Exit animations
+            moveAnimation.enabled = false;
 
             //Change Sprite
+            transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = deadSprite;
 
             //Enable Gravitiy, so bee falls down
             gameObject.GetComponent<Rigidbody2D>().gravityScale = 1;
+            
+            //Enable Rotation of physics simulation
+            gameObject.GetComponent<Rigidbody2D>().freezeRotation = false;
 
             //GameOver Screen
-
+            gameOver.SetActive(true);
+            gameOver.transform.GetChild(0).GetComponent<TMP_Text>().text = "Game Over";
         }
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
         if(other.tag == "Flower")
         {
-            if(other.transform.parent.GetComponent<FlowerManager>().hasPollen)
+            if(other.transform.parent.GetComponent<FlowerManager>().hasPollen && !hasPollen)
             {
-                //Change Sprite of bee
+                //Activate Pollen Sprite
+                transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
 
                 //Bee now has Pollen
                 hasPollen = true;
@@ -129,8 +197,14 @@ public class BeeManager : MonoBehaviour
             //Add 1 to pollenCounter variable in BeeNestManager
             if(hasPollen)
             {
-            other.transform.parent.GetComponent<BeeNestManager>().pollenAmount += 1;
-            hasPollen = false;
+                //Count Pollen
+                other.transform.parent.GetComponent<BeeNestManager>().pollenAmount += 1;
+
+                //deactivate pollen sprite
+                transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
+
+                //Bee no longer has pollen
+                hasPollen = false;
             }
         }
     }

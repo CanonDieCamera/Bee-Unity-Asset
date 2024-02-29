@@ -20,6 +20,7 @@ public class WaspManager : MonoBehaviour
     private float movingSpeed = 5f; //Moving speed of the Wasp, can be changed in the Inspector
     private bool faceRight = false;     //Saves if Wasp faces right
     private Vector2 direction = new Vector2(-1, 0);  //Moving direction of the Wasp
+    private Vector3 lastPosition;
 
     [Header("Enemy AI Settings")]
     [SerializeField]
@@ -39,6 +40,9 @@ public class WaspManager : MonoBehaviour
 
         //Freeze Rotation so it gets not affected by Physics simulation
         gameObject.GetComponent<Rigidbody2D>().freezeRotation = true;
+
+        //initialize lastPosition for UpdateRotation function
+        lastPosition = transform.position;
     }
 
     // Update is called once per frame
@@ -51,6 +55,7 @@ public class WaspManager : MonoBehaviour
         else
         {
             FollowPath();
+            UpdateRotation();
         }
     }
 
@@ -90,5 +95,22 @@ public class WaspManager : MonoBehaviour
                 pointsIndex = 0;
             }
         }
+    }
+
+    private void UpdateRotation()
+    {
+        if(transform.position.x > lastPosition.x && !faceRight) //moves to the right
+        {
+            transform.localEulerAngles = new Vector2(0, 180);
+            faceRight = true;
+        }
+        else if(transform.position.x <  lastPosition.x && faceRight)
+        {
+            transform.localEulerAngles = new Vector2(0, 0);
+            faceRight = false;
+        }
+
+        //Update lastPosition
+        lastPosition = transform.position;
     }
 }

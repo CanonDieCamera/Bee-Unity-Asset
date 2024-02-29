@@ -24,7 +24,11 @@ public class BeeNestManager : MonoBehaviour
             if(_pollenAmount >= pollenAmountWin)
             {
                 //You win!
+                youWonScreen.SetActive(true);
             }
         }
     }
+
+    [SerializeField]
+    private GameObject youWonScreen;
 }
