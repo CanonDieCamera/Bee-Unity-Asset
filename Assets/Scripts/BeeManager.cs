@@ -29,10 +29,6 @@ public class BeeManager : MonoBehaviour
     private bool hasPollen = false;
     private GameObject pollen;
 
-    //GameOver
-    [SerializeField]
-    private GameObject gameOver;
-
     // Start is called before the first frame update
     private void Start() {
         //Animations for Bee movement
@@ -153,7 +149,7 @@ public class BeeManager : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if(other.collider.tag == "Wasp")
+        if(other.collider.tag == "Wasp" & !isDead)
         {
             //Disable Player Controll
             isDead = true;
@@ -170,9 +166,9 @@ public class BeeManager : MonoBehaviour
             //Enable Rotation of physics simulation
             gameObject.GetComponent<Rigidbody2D>().freezeRotation = false;
 
-            //GameOver Screen
-            gameOver.SetActive(true);
-            gameOver.transform.GetChild(0).GetComponent<TMP_Text>().text = "Game Over";
+            //Start with new Bee
+            GameObject newBee = GameObject.Instantiate(GameObject.FindGameObjectWithTag("Scene Management").GetComponent<SceneManagement>().beePrefab, GameObject.FindGameObjectWithTag("Bee Nest").transform.position, Quaternion.identity);
+            Camera.main.GetComponent<CameraManager>().bee = newBee;
         }
     }
 

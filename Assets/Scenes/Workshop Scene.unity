@@ -374,6 +374,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: You Won
       objectReference: {fileID: 0}
+    - target: {fileID: 8378160687976196980, guid: 9f9967857cac4f94da1ead93c15dcac3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -497,6 +501,10 @@ PrefabInstance:
       propertyPath: gameOver
       value: 
       objectReference: {fileID: 583426973}
+    - target: {fileID: 1947617115914659329, guid: 8877f089c2c1b4241b36123bd2069e25, type: 3}
+      propertyPath: beePrefab
+      value: 
+      objectReference: {fileID: 318974687428984211, guid: 8877f089c2c1b4241b36123bd2069e25, type: 3}
     - target: {fileID: 2148216812280954443, guid: 8877f089c2c1b4241b36123bd2069e25, type: 3}
       propertyPath: m_Mass
       value: 1
@@ -668,9 +676,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1223065721}
   - component: {fileID: 1223065722}
+  - component: {fileID: 1223065723}
   m_Layer: 0
   m_Name: SceneManagment
-  m_TagString: Untagged
+  m_TagString: Scene Management
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -702,6 +711,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52a492df63259a46951334799eda072, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1223065723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1223065719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 287254e11dbc9094897f564d2cf16ba7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  beePrefab: {fileID: 318974687428984211, guid: 8877f089c2c1b4241b36123bd2069e25, type: 3}
 --- !u!1 &1276466438
 GameObject:
   m_ObjectHideFlags: 0
@@ -63250,6 +63272,30 @@ PrefabInstance:
     - target: {fileID: 5119144999519155358, guid: 122ccd5fe6535cf4d8261fab5a6ad923, type: 3}
       propertyPath: pollenAmountWin
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6007822519269968537, guid: 122ccd5fe6535cf4d8261fab5a6ad923, type: 3}
+      propertyPath: m_Size.x
+      value: 4.9997444
+      objectReference: {fileID: 0}
+    - target: {fileID: 6007822519269968537, guid: 122ccd5fe6535cf4d8261fab5a6ad923, type: 3}
+      propertyPath: m_Size.y
+      value: 3.736796
+      objectReference: {fileID: 0}
+    - target: {fileID: 6007822519269968537, guid: 122ccd5fe6535cf4d8261fab5a6ad923, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.020830154
+      objectReference: {fileID: 0}
+    - target: {fileID: 6007822519269968537, guid: 122ccd5fe6535cf4d8261fab5a6ad923, type: 3}
+      propertyPath: m_Offset.y
+      value: 0.32289624
+      objectReference: {fileID: 0}
+    - target: {fileID: 6900679814408582742, guid: 122ccd5fe6535cf4d8261fab5a6ad923, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -65.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 6900679814408582742, guid: 122ccd5fe6535cf4d8261fab5a6ad923, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 8.72
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

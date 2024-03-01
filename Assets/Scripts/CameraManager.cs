@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class CameraManager : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject bee;
+    public GameObject bee;
 
     private Vector3 newPosition;    //Position of the camera
 
@@ -14,11 +13,6 @@ public class CameraManager : MonoBehaviour
     [SerializeField]
     private float damping = 1.5f;              //Damping of camera movement on y axis
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()
