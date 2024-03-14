@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Scripting.APIUpdating;
 
@@ -43,6 +44,7 @@ public class WaspManager : MonoBehaviour
 
         //initialize lastPosition for UpdateRotation function
         lastPosition = transform.position;
+        Debug.Log(gameObject.name + ": " + simpleAI);
     }
 
     // Update is called once per frame

@@ -16,8 +16,6 @@ public class BeeNestManager : MonoBehaviour
         set{
             _pollenAmount = value;
 
-            Debug.Log(_pollenAmount);
-
             //Display PollenAmount
             GameObject.FindGameObjectWithTag("Pollen Counter").GetComponent<TMP_Text>().text = _pollenAmount.ToString();
 
