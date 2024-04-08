@@ -7,6 +7,6 @@ public class ButtonController : MonoBehaviour
 {
     public void Restart()
     {
-        SceneManager.LoadScene("Workshop Scene");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
