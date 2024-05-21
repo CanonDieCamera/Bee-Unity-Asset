@@ -1,9 +1,5 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.Scripting.APIUpdating;
 
 /*
 This is the Manager of the Wasp Enemy. It does:
