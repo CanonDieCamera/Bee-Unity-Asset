@@ -48,7 +48,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movingSpeed: 10
   deadSprite: {fileID: 1384687312, guid: d3e8e62e146e5f746b156f6fb37e9684, type: 3}
-  beePrefab: {fileID: 318974687428984211}
 --- !u!50 &2148216812280954443
 Rigidbody2D:
   serializedVersion: 4
