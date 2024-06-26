@@ -5,10 +5,6 @@ TagManager:
   serializedVersion: 2
   tags:
   - Terrain
-  - Bee
-  - Wasp
-  - Flower
-  - Bee Nest
   - Pollen Counter
   - Scene Management
   layers:

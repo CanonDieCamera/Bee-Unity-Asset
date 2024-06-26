@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pollenAmountWin: 10
+  youWonScreen: {fileID: 0}
 --- !u!1 &5647993568882310367
 GameObject:
   m_ObjectHideFlags: 0
@@ -59,7 +60,7 @@ GameObject:
   - component: {fileID: 6007822519269968537}
   m_Layer: 0
   m_Name: Sprite
-  m_TagString: Bee Nest
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -160,14 +161,14 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 8, y: 4.8}
+    oldSize: {x: 1.5625, y: 0.9375}
     newSize: {x: 8, y: 4.8}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
