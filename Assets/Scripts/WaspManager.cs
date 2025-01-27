@@ -48,10 +48,6 @@ public class WaspManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(moveToBee)
-        {
-            
-        }
         if (simple)
         {
             transform.Translate(direction * movingSpeed * Time.deltaTime);
@@ -98,6 +94,13 @@ public class WaspManager : MonoBehaviour
             {
                 pointsIndex = 0;
             }
+        }
+    }
+
+    //Follows the Bee
+    private void OnTriggerStay2D(Collider2D other) {
+        if(moveToBee && other.CompareTag("Bee")) {
+            transform.position = Vector2.MoveTowards(transform.position, other.transform.position, movingSpeed * Time.deltaTime);
         }
     }
 
