@@ -4,8 +4,9 @@ using UnityEngine;
 /*
 This is the Manager of the Wasp Enemy. It does:
     - Wasp Moving
-        - simple AI: Wasp moves horizontal. If it collides with Terrain it changes direction.
-        - other AI: Wasp follows a path of GameObjects
+        - simple: Wasp moves horizontal. If it collides with Terrain it changes direction.
+        - path: Wasp follows a path of GameObjects
+        - toBee: Wasp moves to Bee
     - Stabilizing the Wasp's rotation if it changes uncontrolled
 */
 
@@ -18,20 +19,22 @@ public class WaspManager : MonoBehaviour
     private Vector2 direction = new Vector2(-1, 0);  //Moving direction of the Wasp
     private Vector3 lastPosition;
 
-    [Header("Enemy AI Settings")]
+    [Header("Enemy Move Settings")]
     [SerializeField]
     private List<GameObject> points = new List<GameObject>(); //List of Points the Wasp should follow
     private int pointsIndex = 0;    //Index to loop over points List
-    private bool simpleAI = false;  //Bool to determine AI System
+    private bool simple = false;  //Bool to determine move System
+    [SerializeField]
+    private bool moveToBee = false; //Bool to determine move System
 
 
     // Start is called before the first frame update
     void Start()
     {
-        //If no points are defined Wasp uses simpleAI System
-        if(points.Count == 0)
+        //If no points are defined Wasp uses simple move System
+        if(points.Count == 0 && !moveToBee)
         {
-            simpleAI = true;
+            simple = true;
         }
 
         //Freeze Rotation so it gets not affected by Physics simulation
@@ -39,13 +42,17 @@ public class WaspManager : MonoBehaviour
 
         //initialize lastPosition for UpdateRotation function
         lastPosition = transform.position;
-        Debug.Log(gameObject.name + ": " + simpleAI);
+        Debug.Log(gameObject.name + ": Simple - " + simple + ", move to bee - " + moveToBee);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (simpleAI)
+        if(moveToBee)
+        {
+            
+        }
+        if (simple)
         {
             transform.Translate(direction * movingSpeed * Time.deltaTime);
         }
@@ -60,7 +67,7 @@ public class WaspManager : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D other) { 
         if(other.collider.tag == "Terrain")
         {
-            if(simpleAI)
+            if(simple)
             {
                 //Flip direction
                 if (faceRight)
