@@ -25,14 +25,15 @@ public class WaspManager : MonoBehaviour
     private int pointsIndex = 0;    //Index to loop over points List
     private bool simple = false;  //Bool to determine move System
     [SerializeField]
-    private bool moveToBee = false; //Bool to determine move System
+    private bool moveToBeeAllowed = false; //Bool to determine move System
+    private bool movingToBee = false;
 
 
     // Start is called before the first frame update
     void Start()
     {
         //If no points are defined Wasp uses simple move System
-        if(points.Count == 0 && !moveToBee)
+        if(points.Count == 0)
         {
             simple = true;
         }
@@ -42,21 +43,28 @@ public class WaspManager : MonoBehaviour
 
         //initialize lastPosition for UpdateRotation function
         lastPosition = transform.position;
-        Debug.Log(gameObject.name + ": Simple - " + simple + ", move to bee - " + moveToBee);
+        Debug.Log(gameObject.name + ": Simple - " + simple + ", move to bee - " + moveToBeeAllowed);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (simple)
-        {
-            transform.Translate(direction * movingSpeed * Time.deltaTime);
+        if(!movingToBee) {
+            if (simple)
+            {
+                transform.Translate(direction * movingSpeed * Time.deltaTime);
+            }
+            else
+            {
+                FollowPath();
+                UpdateRotation();
+            }
         }
-        else
-        {
-            FollowPath();
+        else {
+            
             UpdateRotation();
         }
+        
     }
 
     //Is called once, if Wasp collides with something with a Collider2D
@@ -98,9 +106,21 @@ public class WaspManager : MonoBehaviour
     }
 
     //Follows the Bee
+    private void OnTriggerEnter2D(Collider2D other) {
+        if(moveToBeeAllowed && other.CompareTag("Bee")) {
+            movingToBee = true;
+        }
+    }
+
     private void OnTriggerStay2D(Collider2D other) {
-        if(moveToBee && other.CompareTag("Bee")) {
+        if(movingToBee){
             transform.position = Vector2.MoveTowards(transform.position, other.transform.position, movingSpeed * Time.deltaTime);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other) {
+        if(moveToBeeAllowed && other.CompareTag("Bee")) {
+            movingToBee = true;
         }
     }
 
